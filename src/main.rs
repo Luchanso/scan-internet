@@ -26,7 +26,6 @@ fn main() -> std::io::Result<()> {
         };
 
         println!("Connected to {}, try to send byte", i);
-        stream.set_read_timeout(Some(Duration::from_secs(1)))?;
 
         match stream.write(&[1]) {
             Ok(_) => {
@@ -37,17 +36,21 @@ fn main() -> std::io::Result<()> {
                 continue;
             }
         }
-        let mut buf = [];
-        match stream.read(&mut [0; 128]) {
-            Ok(data) => {
-                println!("Data recieved {}", data);
+        let mut buf = [0; 10];
+        match stream.read(&mut buf) {
+            Ok(_data) => {
+                println!("Data recieved {:?}", buf);
+                if (buf == [104, 101, 108, 108, 111, 13, 10, 0, 0, 0]) {
+                    println!("Key validatuib success");
+                } else {
+                    println!("Key not valid");
+                }
             },
             Err(_err) => {
                 println!("Data reciev error {}", _err);
             }
         };
-        thread::sleep(Duration::from_millis(10));
-
+        thread::sleep(Duration::from_millis(100));
         match stream.shutdown(Shutdown::Both) {
             Ok(_) => {
                 println!("Shutdown success");
