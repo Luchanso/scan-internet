@@ -1,0 +1,13 @@
+{
+  "name": "test-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env DEBUG=* node index"
+  },
+  "dependencies": {
+    "cross-env": "7.0.3",
+    "debug": "4.3.1"
+  }
+}
