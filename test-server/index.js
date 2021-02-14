@@ -21,7 +21,7 @@ const server = net.createServer((socket) => {
     })
 
     socket.write('hello\r\n');
-    socket.pipe(socket);
+    socket.end();
     debug('sended key');
 }).listen(PORT, () => {
     debug('listening on', PORT);
